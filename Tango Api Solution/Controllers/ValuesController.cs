@@ -7,25 +7,21 @@ using TangoCard.Raas.Controllers;
 using TangoCard.Raas.Exceptions;
 using TangoCard.Raas.Models;
 
-namespace Tango_Api_Solution.Controllers
+namespace TangoApiSolution.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
             TangoCard.Raas.Configuration.PlatformName = "QAPlatform2";
             TangoCard.Raas.Configuration.PlatformKey = "apYPfT6HNONpDRUj3CLGWYt7gvIHONpDRUYPfT6Hj";
             TangoCard.Raas.RaasClient client = new TangoCard.Raas.RaasClient();
             CatalogController catalog = client.Catalog;
-            try
-            {
-                CatalogModel result = catalog.GetCatalogAsync().Result;
-            }
-            catch (APIException e) { };
-            return new string[] { "value1", "value2" };
+            CatalogModel result = catalog.GetCatalogAsync().Result;
+            return Json(result);
         }
 
         // GET api/values/5
